@@ -20,7 +20,7 @@ class App extends Component {
     ));
 
     return (
-      <div className="App">
+      <div className="App container">
         <Dropzone onDrop={this.onDrop}>
           {({getRootProps, getInputProps}) => (
             <section className="container">
