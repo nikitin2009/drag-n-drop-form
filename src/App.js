@@ -7,7 +7,11 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.onDrop = (files) => {
-      this.setState({files})
+      this.setState({
+        files: files.map(file => Object.assign(file, {
+          preview: URL.createObjectURL(file)
+        }))
+      })
     };
     this.state = {
       files: []
@@ -16,10 +20,17 @@ class App extends Component {
 
   render() {
     const files = this.state.files.map(file => (
-      <li key={file.name}>
-        {file.name} - {file.size} bytes
+      <li key={file.name} className="mb-2">
+        { /^image/.test(file.type)
+          ? <img
+              src={file.preview}
+              alt={file.name}
+              className="img-thumbnail"
+            />
+          : <a href={file.preview}>{file.name}</a>
+        }
       </li>
-    ));
+    ));    
 
     return (
       <div className="App container pt-3">
@@ -27,7 +38,7 @@ class App extends Component {
           <div className="col-md-6">
 
             <h3>Leave a comment</h3>
-            <form>
+            <form onSubmit={ e => e.preventDefault()}>
               <div className="form-group">
                 <label htmlFor="comment" className="sr-only">Your comment:</label>
                 <textarea className="form-control" id="comment" rows="5"></textarea>
@@ -39,10 +50,13 @@ class App extends Component {
                       <input {...getInputProps()} />
                       <div className="text-center">Drag 'n' drop some files here, or click to select files</div>
                     </div>
-                    <div>
-                      <h4>Files</h4>
-                      <ul>{files}</ul>
-                    </div>
+                    { files.length
+                      ? <div>
+                        <h4>Files: </h4>
+                        <ul>{files}</ul>
+                      </div>
+                      : null
+                    }
                   </div>
                 )}
               </Dropzone>
