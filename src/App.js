@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import Dropzone from 'react-dropzone';
 
+import './App.css';
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -20,21 +22,35 @@ class App extends Component {
     ));
 
     return (
-      <div className="App container">
-        <Dropzone onDrop={this.onDrop}>
-          {({getRootProps, getInputProps}) => (
-            <section className="container">
-              <div {...getRootProps({className: 'dropzone'})}>
-                <input {...getInputProps()} />
-                <p>Drag 'n' drop some files here, or click to select files</p>
+      <div className="App container pt-3">
+        <div className="row justify-content-center">
+          <div className="col-md-6">
+
+            <h3>Leave a comment</h3>
+            <form>
+              <div className="form-group">
+                <label htmlFor="comment" className="sr-only">Your comment:</label>
+                <textarea className="form-control" id="comment" rows="5"></textarea>
               </div>
-              <aside>
-                <h4>Files</h4>
-                <ul>{files}</ul>
-              </aside>
-            </section>
-          )}
-        </Dropzone>
+              <Dropzone onDrop={this.onDrop}>
+                {({getRootProps, getInputProps}) => (
+                  <div className="form-group">
+                    <div {...getRootProps({className: 'dropzone p-3 mb-2 bg-light'})}>
+                      <input {...getInputProps()} />
+                      <div className="text-center">Drag 'n' drop some files here, or click to select files</div>
+                    </div>
+                    <div>
+                      <h4>Files</h4>
+                      <ul>{files}</ul>
+                    </div>
+                  </div>
+                )}
+              </Dropzone>
+              <button type="submit" className="btn btn-primary">Submit</button>
+            </form>
+
+          </div>
+        </div>
       </div>
     );
   }
