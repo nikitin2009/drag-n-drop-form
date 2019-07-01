@@ -1,26 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import Dropzone from 'react-dropzone';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.onDrop = (files) => {
+      this.setState({files})
+    };
+    this.state = {
+      files: []
+    };
+  }
+
+  render() {
+    const files = this.state.files.map(file => (
+      <li key={file.name}>
+        {file.name} - {file.size} bytes
+      </li>
+    ));
+
+    return (
+      <div className="App">
+        <Dropzone onDrop={this.onDrop}>
+          {({getRootProps, getInputProps}) => (
+            <section className="container">
+              <div {...getRootProps({className: 'dropzone'})}>
+                <input {...getInputProps()} />
+                <p>Drag 'n' drop some files here, or click to select files</p>
+              </div>
+              <aside>
+                <h4>Files</h4>
+                <ul>{files}</ul>
+              </aside>
+            </section>
+          )}
+        </Dropzone>
+      </div>
+    );
+  }
 }
 
 export default App;
