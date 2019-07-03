@@ -40,7 +40,8 @@ class App extends Component {
     e.preventDefault();
 
     const newComment = {
-      text: this.state.commentText
+      text: this.state.commentText,
+      files: this.state.files
     };
 
     this.addComment(newComment);
@@ -49,7 +50,8 @@ class App extends Component {
   addComment(comment) {
     this.setState(({ comments }) => ({
       comments: [...comments, comment],
-      commentText: ''
+      commentText: '',
+      files: []
     }),
     this.saveToLocal);
   }
