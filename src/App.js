@@ -1,24 +1,66 @@
 import React, {Component} from 'react';
 import Dropzone from 'react-dropzone';
 
+import CommentsList from './CommentsList';
+
 import './App.css';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.onDrop = (files) => {
-      this.setState({
-        files: files.map(file => Object.assign(file, {
-          preview: URL.createObjectURL(file)
-        }))
-      })
-    };
+    
     this.state = {
-      files: []
+      commentText: '',
+      comments: localStorage.getItem('comments') 
+                ? JSON.parse(localStorage.getItem('comments'))
+                : [],
+      files: [],
     };
+
+    this.onCommentChange = this.onCommentChange.bind(this);
+    this.onDrop = this.onDrop.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+  }
+
+  onDrop(files) {
+    this.setState({
+      files: files.map(file => Object.assign(file, {
+        preview: URL.createObjectURL(file)
+      }))
+    })
+  };
+
+  onCommentChange(e) {
+    const commentText = e.target.value;
+
+    this.setState({ commentText });
+  }
+
+  onFormSubmit(e) {
+    e.preventDefault();
+
+    const newComment = {
+      text: this.state.commentText
+    };
+
+    this.addComment(newComment);
+  }
+
+  addComment(comment) {
+    this.setState(({ comments }) => ({
+      comments: [...comments, comment],
+      commentText: ''
+    }),
+    this.saveToLocal);
+  }
+
+  saveToLocal() {
+    localStorage.setItem('comments', JSON.stringify(this.state.comments));
   }
 
   render() {
+    const { commentText, comments } = this.state;
+
     const files = this.state.files.map(file => (
       <li key={file.name} className="mb-2">
         { /^image/.test(file.type)
@@ -30,18 +72,29 @@ class App extends Component {
           : <a href={file.preview}>{file.name}</a>
         }
       </li>
-    ));    
+    ));
 
     return (
       <div className="App container pt-3">
         <div className="row justify-content-center">
           <div className="col-md-6">
 
+          { comments.length
+            ? <CommentsList comments={comments} />
+            : null
+          }
+
             <h3>Leave a comment</h3>
-            <form onSubmit={ e => e.preventDefault()}>
+            <form onSubmit={this.onFormSubmit}>
               <div className="form-group">
                 <label htmlFor="comment" className="sr-only">Your comment:</label>
-                <textarea className="form-control" id="comment" rows="5"></textarea>
+                <textarea
+                  className="form-control"
+                  id="comment"
+                  rows="5"
+                  onChange={this.onCommentChange}
+                  value={commentText}
+                ></textarea>
               </div>
               <Dropzone onDrop={this.onDrop}>
                 {({getRootProps, getInputProps}) => (
