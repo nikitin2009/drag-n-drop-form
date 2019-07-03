@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/drag-n-drop-form/precache-manifest.1eebd72c83a34db8a265116869fe772d.js"
+  "/drag-n-drop-form/precache-manifest.63734964d0c752db28eff075c1d83b3e.js"
 );
 
 self.addEventListener('message', (event) => {
