@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "7d11cbd53e8c84ee8723779088530dc5",
+    "revision": "0f432511425fcf7e890de59a3e153e71",
     "url": "/drag-n-drop-form/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/drag-n-drop-form/static/css/2.510409cd.chunk.css"
   },
   {
-    "revision": "0cc75f98c71e197fc415",
+    "revision": "2f371b77b8bbe819e1f9",
     "url": "/drag-n-drop-form/static/css/main.4ea25b19.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/drag-n-drop-form/static/js/2.e47649f8.chunk.js"
   },
   {
-    "revision": "0cc75f98c71e197fc415",
-    "url": "/drag-n-drop-form/static/js/main.a7bd22f8.chunk.js"
+    "revision": "2f371b77b8bbe819e1f9",
+    "url": "/drag-n-drop-form/static/js/main.85ad463d.chunk.js"
   },
   {
     "revision": "0c5894bba67a27bd73ab",
